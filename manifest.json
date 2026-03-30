@@ -16,13 +16,6 @@
     "build": "cd workspace/projects/starter && npm install --include=dev",
     "start": "cd workspace/projects/starter && npx vite --host 0.0.0.0"
   },
-  "secrets": [
-    {
-      "name": "ANTHROPIC_API_KEY",
-      "description": "Anthropic API key for Claude access",
-      "required": true
-    }
-  ],
   "routes": [
     {
       "port": 5173,

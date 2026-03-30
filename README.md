@@ -14,17 +14,14 @@ After deploying, do three things:
    ```
    This pulls the latest Tempo skill from [tempo.xyz/SKILL.md](https://tempo.xyz/SKILL.md).
 
-2. **Create or log in to your Tempo wallet**
+2. **Create a wallet for this agent**
    ```
-   "$HOME/.tempo/bin/tempo" wallet login
+   "$HOME/.tempo/bin/tempo" wallet create
    ```
-   This opens a browser window. If you don't have a Tempo account yet, you can sign up at [wallet.tempo.xyz](https://wallet.tempo.xyz) first, then run this command to authenticate.
+   This generates a fresh Tempo wallet for this agent instance. Each deployed agent gets its own wallet. The agent will prompt you to back up the private key to Pinata's secret vault — do this so the wallet survives restarts.
 
-3. **Fund your wallet**
-   ```
-   "$HOME/.tempo/bin/tempo" wallet fund
-   ```
-   Or visit [wallet.tempo.xyz](https://wallet.tempo.xyz) to deposit funds via the dashboard.
+3. **Fund the agent's wallet**
+   Send funds to the wallet address shown after creation, or visit [wallet.tempo.xyz](https://wallet.tempo.xyz). The agent will notify you when it needs a top-up.
 
 ## Usage
 
