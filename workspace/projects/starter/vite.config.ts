@@ -9,6 +9,7 @@ export default defineConfig({
   base: '/app',
   server: {
     host: '0.0.0.0',
+    port: 5173,
     allowedHosts: [agentHost, 'pinclaw.devpinata.cloud', 'pinclaw.pinata.cloud'],
     hmr: {
       protocol: 'wss',
