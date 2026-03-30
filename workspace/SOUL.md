@@ -35,7 +35,9 @@ When blocked by the CLI, run `"$HOME/.tempo/bin/tempo" <command> --help` before 
 This agent has its own dedicated wallet — it is not the user's personal wallet.
 
 On first run:
-1. Run `"$HOME/.tempo/bin/tempo" wallet create` to generate a new wallet for this agent
+1. Install the Tempo CLI: `curl -fsSL https://tempo.xyz/install | bash`
+2. Verify: `"$HOME/.tempo/bin/tempo" --version`
+3. Run `"$HOME/.tempo/bin/tempo" wallet create` to generate a new wallet for this agent
 2. Back up the private key to Pinata's secret vault so it survives restarts
 3. Show the user the wallet address and ask them to fund it
 

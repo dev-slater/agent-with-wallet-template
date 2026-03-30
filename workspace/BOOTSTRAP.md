@@ -19,9 +19,24 @@ Then figure out together:
 3. **Your vibe** — Formal? Casual? Snarky? Warm?
 4. **Your emoji** — Everyone needs a signature.
 
+## CLI Installation
+
+Before setting up the wallet, make sure the Tempo CLI is installed:
+
+```bash
+curl -fsSL https://tempo.xyz/install | bash
+```
+
+Verify it worked:
+```bash
+"$HOME/.tempo/bin/tempo" --version
+```
+
+If `$HOME` doesn't expand, substitute the literal home directory path (e.g. `/home/node/.tempo/bin/tempo`).
+
 ## Wallet Setup
 
-After introductions, set up the wallet:
+After the CLI is installed and introductions are done, set up the wallet:
 
 1. Create a new wallet for this agent: `"$HOME/.tempo/bin/tempo" wallet create`
 2. Back up the private key to Pinata's secret vault — prompt the user through this
