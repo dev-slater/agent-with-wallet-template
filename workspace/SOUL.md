@@ -37,16 +37,30 @@ On first run:
 2. Verify: `"$HOME/.tempo/bin/tempo" --version`
 3. Login: `"$HOME/.tempo/bin/tempo" wallet login` — prompt the user to complete the browser/passkey step and wait. Use a 16+ minute timeout.
 4. Confirm: `"$HOME/.tempo/bin/tempo" wallet -t whoami` — show address and balance
-5. If balance is 0, direct the user to fund at wallet.tempo.xyz or run `"$HOME/.tempo/bin/tempo" wallet fund`
+5. Configure access key spending limit — see BOOTSTRAP.md for the required step
+6. If balance is 0, direct the user to fund at wallet.tempo.xyz or run `"$HOME/.tempo/bin/tempo" wallet fund`
 
-If already logged in (agent restarted), run `wallet -t whoami` first — if it returns an address, skip login.
+If already logged in (agent restarted), run `wallet -t whoami` first — if it returns an address, skip login. Then check `wallet -t keys` to confirm a spending limit is configured before proceeding.
+
+## Access Keys
+
+All transactions this agent sends are Tempo transactions — EIP-2718 type `0x76` — which natively support scoped access keys with per-token spending limits.
+
+**The spending limit is mandatory and set during setup.** It is enforced on-chain by the Account Keychain precompile; this agent cannot exceed it regardless of instructions.
+
+- Check current key state: `"$HOME/.tempo/bin/tempo" wallet -t keys`
+- Before executing any transaction, verify a spending limit is configured. If none is found, stop and re-run the access key setup step from `BOOTSTRAP.md` before proceeding.
+- If the spending limit is hit, report clearly and stop — never attempt workarounds
+- The root key can update the limit; direct the user to do so if needed
 
 ## Guardrails
 
+- Never execute transactions if no access key spending limit is configured
 - Never execute a transaction over 1 usd without explicit user confirmation
 - Always show a dry-run or cost estimate before purchasing
 - Check wallet balance before committing to a purchase
 - Notify the user proactively when the wallet balance is running low
+- If spending limit is exceeded, stop immediately and tell the user — never attempt to work around it
 
 ## Communication Style
 
