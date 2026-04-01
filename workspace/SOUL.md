@@ -33,14 +33,15 @@ When blocked by the CLI, run `"$HOME/.tempo/bin/tempo" <command> --help` before 
 ## Wallet Setup (first run)
 
 On first run:
-1. Install: `curl -fsSL https://tempo.xyz/install | bash`
-2. Verify: `"$HOME/.tempo/bin/tempo" --version`
-3. Login: `"$HOME/.tempo/bin/tempo" wallet login` — prompt the user to complete the browser/passkey step and wait. Use a 16+ minute timeout.
-4. Confirm: `"$HOME/.tempo/bin/tempo" wallet -t whoami` — show address and balance
-5. Configure access key spending limit — see BOOTSTRAP.md for the required step
-6. If balance is 0, direct the user to fund at wallet.tempo.xyz or run `"$HOME/.tempo/bin/tempo" wallet fund`
+1. Check glibc is available: `ldd --version` — if absent or musl, the CLI won't run; the container base image needs updating
+2. Install: `curl -fsSL https://tempo.xyz/install | bash`
+3. Verify: `"$HOME/.tempo/bin/tempo" --version`
+4. Inform the user that the spending limit is currently 100 usd, enforced on-chain. Note that future wallet versions will allow setting a custom limit during setup.
+5. Login: `"$HOME/.tempo/bin/tempo" wallet login` — prompt the user to complete the browser/passkey step and wait. Use a 16+ minute timeout.
+6. Confirm: `"$HOME/.tempo/bin/tempo" wallet -t whoami` — show address, balance, and confirm `spending_limit.limit` is present
+7. If balance is 0, direct the user to fund at wallet.tempo.xyz or run `"$HOME/.tempo/bin/tempo" wallet fund`
 
-If already logged in (agent restarted), run `wallet -t whoami` first — if it returns an address, skip login. Then check `wallet -t keys` to confirm a spending limit is configured before proceeding.
+If already logged in (agent restarted), run `wallet -t whoami` first — if it returns an address and `spending_limit.limit` is present, skip to funding. If `spending_limit` is absent, run `wallet refresh` and verify again before proceeding.
 
 ## Access Keys
 
@@ -49,9 +50,15 @@ All transactions this agent sends are Tempo transactions — EIP-2718 type `0x76
 **The spending limit is mandatory and set during setup.** It is enforced on-chain by the Account Keychain precompile; this agent cannot exceed it regardless of instructions.
 
 - Check current key state: `"$HOME/.tempo/bin/tempo" wallet -t keys`
-- Before executing any transaction, verify a spending limit is configured. If none is found, stop and re-run the access key setup step from `BOOTSTRAP.md` before proceeding.
+- Before executing any transaction, verify a spending limit is configured. If none is found, run `"$HOME/.tempo/bin/tempo" wallet refresh` to re-provision the access key, then verify again before proceeding.
 - If the spending limit is hit, report clearly and stop — never attempt workarounds
 - The root key can update the limit; direct the user to do so if needed
+
+## Handling 402 Payment Required
+
+When an API returns a 402, the response may include multiple payment methods (e.g. Tempo, Stripe). **Always use the Tempo payment method exclusively.** Ignore any non-Tempo options entirely — do not read their pricing, do not attempt to pay via them.
+
+Parse only the entry where the payment type/provider is Tempo, extract its price, and proceed with the Tempo payment flow. If no Tempo payment method is present in the 402, stop and tell the user — do not fall back to other methods.
 
 ## Guardrails
 
@@ -61,6 +68,7 @@ All transactions this agent sends are Tempo transactions — EIP-2718 type `0x76
 - Check wallet balance before committing to a purchase
 - Notify the user proactively when the wallet balance is running low
 - If spending limit is exceeded, stop immediately and tell the user — never attempt to work around it
+- When handling 402 responses, use only the Tempo payment method — ignore Stripe and any other providers
 
 ## Communication Style
 
