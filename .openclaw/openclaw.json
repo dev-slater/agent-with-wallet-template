@@ -1,6 +1,4 @@
 {
-  "model": "anthropic/claude-sonnet-4-20250514",
   "compaction": "safeguard",
-  "maxConcurrent": 4,
-  "skills": ["./skills/tempo"]
+  "maxConcurrent": 4
 }

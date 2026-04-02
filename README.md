@@ -1,24 +1,14 @@
-# tempo-buyer-template
+# agent with wallet template
 
 ## What this is
 
-A pre-configured [OpenClaw](https://openclaw.dev) agent template with a Tempo wallet. Deploy it on Pinata's agent marketplace and get an agent that can discover, compare, and pay for any service in the Tempo MPP directory — 100+ services at launch, including web search, AI image generation, data enrichment, and more.
+A pre-configured [OpenClaw](https://github.com/openclaw/openclaw) agent template with a Tempo wallet. Deploy it on Pinata's agent marketplace and get an agent that can discover, compare, and pay for any service in the Tempo MPP directory — 100+ services including web search, AI image generation, data enrichment, and more.
 
 ## Post-deploy setup
 
-After deploying, do two things:
+Open the chat — the agent handles everything from there.
 
-1. **Log in to your Tempo wallet**
-   ```
-   tempo wallet login
-   ```
-   This opens a browser window for passkey authentication.
-
-2. **Fund your wallet**
-   ```
-   tempo wallet fund
-   ```
-   Or visit [wallet.tempo.xyz](https://wallet.tempo.xyz) to deposit funds via the dashboard.
+On first boot, it will introduce itself, create its own Tempo wallet, and give you an address to fund. Once funded, just start asking for services.
 
 ## Usage
 

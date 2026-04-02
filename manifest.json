@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "agent": {
+    "name": "Agent with Wallet Template",
+    "description": "An AI agent pre-configured with a Tempo wallet. Discovers, compares, and pays for services in the Tempo MPP directory — web search, image generation, data enrichment, and more.",
+    "vibe": "practical, cost-conscious, confirms before spending",
+    "emoji": "💳"
+  },
+  "template": {
+    "slug": "agent-with-wallet",
+    "category": "general",
+    "tags": ["tempo", "wallet", "payments", "mpp"],
+    "partnerName": "Pinata"
+  },
+  "scripts": {
+    "build": "cd workspace/projects/starter && npm install --include=dev && cd ../../.. && bash setup.sh",
+    "start": "cd workspace/projects/starter && npx vite --host 0.0.0.0"
+  },
+  "routes": [
+    {
+      "port": 5173,
+      "path": "/app",
+      "protected": false
+    }
+  ]
+}
